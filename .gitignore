@@ -1,0 +1,5 @@
+FacesModule/DataSets/cmufaces/*
+FacesModule/DataSets/.ipynb_checkpoints/*
+*.ipynb
+faces.tar.gz
+FacesModule/DataSets/yalefaces/*
