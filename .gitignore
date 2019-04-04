@@ -3,3 +3,4 @@ FacesModule/DataSets/.ipynb_checkpoints/*
 *.ipynb
 faces.tar.gz
 FacesModule/DataSets/yalefaces/*
+FacesModule/DataSets/casia/*
