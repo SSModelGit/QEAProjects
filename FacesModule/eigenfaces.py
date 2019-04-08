@@ -35,7 +35,9 @@ class EigenEmotions:
     def classifier(self, face_num, M, singular):
         vM = self.v[:,0:M]
         w = self.train_mat.T.dot(vM)
+        self.ws = w.shape
         foo = self.test_mat[:,face_num].T.dot(vM)
+        self.fs = foo.shape
         comparison = np.sqrt(np.mean((w - foo)**2,1))
         face = np.nanargmin(comparison)
         test_name = self.test_labels[face_num]
@@ -78,24 +80,6 @@ class EigenEmotions:
 
     def num_eigen_faces(self):
         return self.v.shape
-    
-    def train_images(self):
-        return self.train_images
-
-    def train_data(self):
-        return self.train_data
-
-    def train_labels(self):
-        return self.train_labels
-    
-    def test_images(self):
-        return self.test_images
-
-    def test_data(self):
-        return self.test_data
-    
-    def test_labels(self):
-        return self.test_labels
 
 
 if __name__ == "__main__":
@@ -107,12 +91,15 @@ if __name__ == "__main__":
     classifier = EigenEmotions(data, labels)
 
     qual = []
-    for i in np.arange(1,classifier.num_eigen_faces()[1]+1,dtype=int):
+    # for i in np.arange(1,classifier.num_eigen_faces()[1]+1,dtype=int):
+    for i in np.arange(1,11,dtype=int):
         qual.append([i,classifier.accuracy_test(i)])
 
     qual = np.array(qual)
+    print("Standard EigenFaces method best accuracy: ", qual[-1])
 
     print("Time elapsed: ", time.time() - start_time)
+    """
 
     start_time = time.time()
 
@@ -129,12 +116,20 @@ if __name__ == "__main__":
 
     print("Time elapsed: ", time.time() - start_time)
 
-    print("Standard EigenFaces method best accuracy: ", qual[-1])
+    # print("Standard EigenFaces method best accuracy: ", qual[-1])
     print("Using average faces generated via dlib and OpenCV best accuracy: ", avg_qual[-1])
 
     """
     plt.figure()
     plt.plot(qual[:,0],qual[:,1])
+    plt.title('Eigenfaces vs. Accuracy')
+    plt.xlabel('Number of Eigenfaces used')
+    plt.ylabel('Accuracy')
+    plt.show()
+    """
+
+    plt.figure()
+    plt.plot(avg_qual[:,0],avg_qual[:,1])
     plt.title('Eigenfaces vs. Accuracy')
     plt.xlabel('Number of Eigenfaces used')
     plt.ylabel('Accuracy')
